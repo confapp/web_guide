@@ -19673,6 +19673,7 @@ $.widget("confapp.caWebProgram", {
 		mapImageDirectory: 'images/maps',
 		imageDirectory: 'images',
 		conferenceLogo: true,
+		debug: false,
 		firebaseRef: new Firebase("https://confapp-data-sync.firebaseio.com")
 	},
 
@@ -19724,7 +19725,6 @@ $.widget("confapp.caWebProgram", {
 		this.loadingElement.remove();
 
 		this._user_data = new UserData(this.option('firebaseRef'), database.getID(), conference_info.data_sync);
-		$('<div />').text(conference_info.description).appendTo(this.logoElement);
 		if(conference_info.icon_url && this.option('conferenceLogo')) {
 			this.logo = $('<img />').prependTo(this.logoElement)
 									.attr({
@@ -19734,6 +19734,7 @@ $.widget("confapp.caWebProgram", {
 										'max-width': '300px',
 										'max-height': '100px'
 									});
+			$('<div />').text(conference_info.description).appendTo(this.logoElement);
 		}
 
 		if(this.option("saveOnUnload")) {
@@ -19803,7 +19804,8 @@ $.widget("confapp.caWebProgram", {
 								dayTimestamp: dayTimestamp,
 								annotationImageDirectory: addTrailingSlash(this.option('annotationImageDirectory')),
 								mapImageDirectory: addTrailingSlash(this.option('mapImageDirectory')),
-								imageDirectory: addTrailingSlash(this.option('imageDirectory'))
+								imageDirectory: addTrailingSlash(this.option('imageDirectory')),
+								debug: this.option("debug")
 							});
 			}, this);
 		} else { // we have data that doesn't have any times set yet. just display everything
@@ -19815,7 +19817,8 @@ $.widget("confapp.caWebProgram", {
 							dayTimestamp: false,
 							annotationImageDirectory: addTrailingSlash(this.option('annotationImageDirectory')),
 							mapImageDirectory: addTrailingSlash(this.option('mapImageDirectory')),
-							imageDirectory: addTrailingSlash(this.option('imageDirectory'))
+							imageDirectory: addTrailingSlash(this.option('imageDirectory')),
+							debug: this.option("debug")
 						});
 		}
 	},
@@ -19851,7 +19854,8 @@ $.widget("confapp.caDay", {
 		headerTag: "h3",
 		annotationImageDirectory: false,
 		mapImageDirectory: false,
-		imageDirectory: false
+		imageDirectory: false,
+		debug: false
 	},
 
 	_create: function() {
@@ -19931,7 +19935,8 @@ $.widget("confapp.caDay", {
 							totalSimultaneousSessions: totalSimultaneousSessions,
 							annotationImageDirectory: this.option('annotationImageDirectory'),
 							mapImageDirectory: this.option('mapImageDirectory'),
-							imageDirectory: this.option('imageDirectory')
+							imageDirectory: this.option('imageDirectory'),
+							debug: this.option('debug')
 						});
 		}, this));
 
@@ -20422,6 +20427,7 @@ $.widget("confapp.timeSlot", {
 		annotationImageDirectory: false,
 		mapImageDirectory: false,
 		imageDirectory: false,
+		debug: false,
 		getHeaderText: function(startTimestamp, endTimestamp, utc_offset, my_offset) {
 			if(startTimestamp >= 0) {
 				var startTime = new Date(startTimestamp + utc_offset + my_offset),
@@ -20548,7 +20554,8 @@ $.widget("confapp.timeSlot", {
 								singular: isSingular,
 								annotationImageDirectory: this.option('annotationImageDirectory'),
 								mapImageDirectory: this.option('mapImageDirectory'),
-								imageDirectory: this.option('imageDirectory')
+								imageDirectory: this.option('imageDirectory'),
+								debug: this.option('debug')
 							});
 			}, this));
 		}, this));
@@ -20580,7 +20587,8 @@ $.widget("confapp.session", {
 		collapseOtherSessions: true,
 		annotationImageDirectory: false,
 		mapImageDirectory: false,
-		imageDirectory: false
+		imageDirectory: false,
+		debug: false
 	},
 
 	_create: function() {
@@ -20608,7 +20616,8 @@ $.widget("confapp.session", {
 												userData: this.option("userData"),
 												annotationImageDirectory: this.option('annotationImageDirectory'),
 												mapImageDirectory: this.option('mapImageDirectory'),
-												imageDirectory: this.option('imageDirectory')
+												imageDirectory: this.option('imageDirectory'),
+												debug: this.option('debug')
 											});
 		}
 
@@ -20711,6 +20720,7 @@ $.widget("confapp.session", {
 													deactivatedLabel: " Schedule",
 													activatedImage: iDir + "schedule_selected.png",
 													deactivatedImage: iDir + "schedule.png",
+													debug: this.option('debug')
 												}).on("toggled", $.proxy(function(event) {
 													this._setUserData('schedule', event.activated);
 												}, this))
@@ -20727,6 +20737,7 @@ $.widget("confapp.session", {
 														deactivatedLabel: " Reading List",
 														activatedImage: iDir + "reading_list_selected.png",
 														deactivatedImage: iDir + "reading_list.png",
+														debug: this.option('debug')
 													}).on("toggled", $.proxy(function(event) {
 														this._setUserData('reading_list', event.activated);
 													}, this))
@@ -20919,7 +20930,8 @@ $.widget("confapp.session", {
 											.person({
 												person: chair,
 												inline: true,
-												prefix: 'Chair: '
+												prefix: 'Chair: ',
+												debug: this.option('debug')
 											})
 											.addClass('chair');
 		}
@@ -20936,7 +20948,8 @@ $.widget("confapp.session", {
 							showTitle: true,
 							annotationImageDirectory: this.option('annotationImageDirectory'),
 							mapImageDirectory: this.option('mapImageDirectory'),
-							imageDirectory: this.option('imageDirectory')
+							imageDirectory: this.option('imageDirectory'),
+							debug: this.option('debug')
 						});
 		}, this));
 	},
@@ -21018,6 +21031,7 @@ $.widget("confapp.presentation", {
 		imageDirectory: false,
 		annotationImageDirectory: false,
 		mapImageDirectory: false,
+		debug: false,
 		getAttachmentText: function() {
 			return caWebOptions.getAttachmentText.apply(this, arguments);
 		}
@@ -21132,7 +21146,8 @@ $.widget("confapp.presentation", {
 													location: location,
 													mapImageDirectory: this.option('mapImageDirectory'),
 													annotationImageDirectory: this.option('annotationImageDirectory'),
-													imageDirectory: this.option('imageDirectory')
+													imageDirectory: this.option('imageDirectory'),
+													debug: this.option('debug')
 												});
 		}
 
@@ -21246,6 +21261,7 @@ $.widget("confapp.presentation", {
 													deactivatedLabel: " Schedule",
 													activatedImage: iDir + "schedule_selected.png",
 													deactivatedImage: iDir + "schedule.png",
+													debug: this.option('debug')
 												}).on("toggled", $.proxy(function(event) {
 													var activated = event.activated;
 													userData.setFieldAndSave(presentation_id, "schedule", activated);
@@ -21263,6 +21279,7 @@ $.widget("confapp.presentation", {
 														deactivatedLabel: " Reading List",
 														activatedImage: iDir + "reading_list_selected.png",
 														deactivatedImage: iDir + "reading_list.png",
+														debug: this.option('debug')
 													}).on("toggled", $.proxy(function(event) {
 														var activated = event.activated;
 														userData.setFieldAndSave(presentation_id, "reading_list", activated);
@@ -21282,7 +21299,7 @@ $.widget("confapp.presentation", {
 												deactivatedImage: iDir + "vote.png",
 												checkBeforeActivating: $.proxy(function(val, onReady) {
 													if(val) {
-														if(presentation.getStartTimestamp() <= (new Date()).getTime()) {
+														if(presentation.getStartTimestamp() <= (new Date()).getTime() || this.option('debug')) {
 															if(userData.isLoggedIn()) {
 																onReady(val);
 															} else {
@@ -21301,7 +21318,8 @@ $.widget("confapp.presentation", {
 													} else {
 														onReady(val);
 													}
-												}, this)
+												}, this),
+												debug: this.option('debug')
 											}).on("toggled", $.proxy(function(event) {
 												var activated = event.activated;
 												userData.setFieldAndSave(presentation_id, "vote", activated);

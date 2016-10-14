@@ -7,13 +7,21 @@
 		<script type="text/javascript" src="js/confapp.min.js"></script>
 	</head>
 	<body>
-		<div class='container'></div>
+		<div class='container' id='program'></div>
+		<div class='footer container'>
+			<div class='row'>
+				<div class="twelve columns">
+					Program Guide by Electronic Conference Services | <a href='https://github.com/confapp/web_guide' target='_blank'>Fork us on GitHub</a>
+				</div>
+			</div>
+		</div>
 	</body>
 	<script type="text/javascript">
 		$(function() {
-			$('.container').caWebProgram({
+			$('#program').caWebProgram({
 				databaseURL: false,
-				conferenceID: getUrlParameter('conference')
+				conferenceID: getUrlParameter('conference') || 'default',
+				debug: getUrlParameter('debug') || false
 			});
 		});
 	</script>
