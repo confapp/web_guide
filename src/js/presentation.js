@@ -11,6 +11,7 @@ $.widget("confapp.presentation", {
 		imageDirectory: false,
 		annotationImageDirectory: false,
 		mapImageDirectory: false,
+		debug: false,
 		getAttachmentText: function() {
 			return caWebOptions.getAttachmentText.apply(this, arguments);
 		}
@@ -125,7 +126,8 @@ $.widget("confapp.presentation", {
 													location: location,
 													mapImageDirectory: this.option('mapImageDirectory'),
 													annotationImageDirectory: this.option('annotationImageDirectory'),
-													imageDirectory: this.option('imageDirectory')
+													imageDirectory: this.option('imageDirectory'),
+													debug: this.option('debug')
 												});
 		}
 
@@ -239,6 +241,7 @@ $.widget("confapp.presentation", {
 													deactivatedLabel: " Schedule",
 													activatedImage: iDir + "schedule_selected.png",
 													deactivatedImage: iDir + "schedule.png",
+													debug: this.option('debug')
 												}).on("toggled", $.proxy(function(event) {
 													var activated = event.activated;
 													userData.setFieldAndSave(presentation_id, "schedule", activated);
@@ -256,6 +259,7 @@ $.widget("confapp.presentation", {
 														deactivatedLabel: " Reading List",
 														activatedImage: iDir + "reading_list_selected.png",
 														deactivatedImage: iDir + "reading_list.png",
+														debug: this.option('debug')
 													}).on("toggled", $.proxy(function(event) {
 														var activated = event.activated;
 														userData.setFieldAndSave(presentation_id, "reading_list", activated);
@@ -275,7 +279,7 @@ $.widget("confapp.presentation", {
 												deactivatedImage: iDir + "vote.png",
 												checkBeforeActivating: $.proxy(function(val, onReady) {
 													if(val) {
-														if(presentation.getStartTimestamp() <= (new Date()).getTime()) {
+														if(presentation.getStartTimestamp() <= (new Date()).getTime() || this.option('debug')) {
 															if(userData.isLoggedIn()) {
 																onReady(val);
 															} else {
@@ -294,7 +298,8 @@ $.widget("confapp.presentation", {
 													} else {
 														onReady(val);
 													}
-												}, this)
+												}, this),
+												debug: this.option('debug')
 											}).on("toggled", $.proxy(function(event) {
 												var activated = event.activated;
 												userData.setFieldAndSave(presentation_id, "vote", activated);

@@ -8,6 +8,7 @@ $.widget("confapp.caWebProgram", {
 		mapImageDirectory: 'images/maps',
 		imageDirectory: 'images',
 		conferenceLogo: true,
+		debug: false,
 		firebaseRef: new Firebase("https://confapp-data-sync.firebaseio.com")
 	},
 
@@ -138,7 +139,8 @@ $.widget("confapp.caWebProgram", {
 								dayTimestamp: dayTimestamp,
 								annotationImageDirectory: addTrailingSlash(this.option('annotationImageDirectory')),
 								mapImageDirectory: addTrailingSlash(this.option('mapImageDirectory')),
-								imageDirectory: addTrailingSlash(this.option('imageDirectory'))
+								imageDirectory: addTrailingSlash(this.option('imageDirectory')),
+								debug: this.option("debug")
 							});
 			}, this);
 		} else { // we have data that doesn't have any times set yet. just display everything
@@ -150,7 +152,8 @@ $.widget("confapp.caWebProgram", {
 							dayTimestamp: false,
 							annotationImageDirectory: addTrailingSlash(this.option('annotationImageDirectory')),
 							mapImageDirectory: addTrailingSlash(this.option('mapImageDirectory')),
-							imageDirectory: addTrailingSlash(this.option('imageDirectory'))
+							imageDirectory: addTrailingSlash(this.option('imageDirectory')),
+							debug: this.option("debug")
 						});
 		}
 	},

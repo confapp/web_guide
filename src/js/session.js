@@ -12,7 +12,8 @@ $.widget("confapp.session", {
 		collapseOtherSessions: true,
 		annotationImageDirectory: false,
 		mapImageDirectory: false,
-		imageDirectory: false
+		imageDirectory: false,
+		debug: false
 	},
 
 	_create: function() {
@@ -40,7 +41,8 @@ $.widget("confapp.session", {
 												userData: this.option("userData"),
 												annotationImageDirectory: this.option('annotationImageDirectory'),
 												mapImageDirectory: this.option('mapImageDirectory'),
-												imageDirectory: this.option('imageDirectory')
+												imageDirectory: this.option('imageDirectory'),
+												debug: this.option('debug')
 											});
 		}
 
@@ -143,6 +145,7 @@ $.widget("confapp.session", {
 													deactivatedLabel: " Schedule",
 													activatedImage: iDir + "schedule_selected.png",
 													deactivatedImage: iDir + "schedule.png",
+													debug: this.option('debug')
 												}).on("toggled", $.proxy(function(event) {
 													this._setUserData('schedule', event.activated);
 												}, this))
@@ -159,6 +162,7 @@ $.widget("confapp.session", {
 														deactivatedLabel: " Reading List",
 														activatedImage: iDir + "reading_list_selected.png",
 														deactivatedImage: iDir + "reading_list.png",
+														debug: this.option('debug')
 													}).on("toggled", $.proxy(function(event) {
 														this._setUserData('reading_list', event.activated);
 													}, this))
@@ -351,7 +355,8 @@ $.widget("confapp.session", {
 											.person({
 												person: chair,
 												inline: true,
-												prefix: 'Chair: '
+												prefix: 'Chair: ',
+												debug: this.option('debug')
 											})
 											.addClass('chair');
 		}
@@ -368,7 +373,8 @@ $.widget("confapp.session", {
 							showTitle: true,
 							annotationImageDirectory: this.option('annotationImageDirectory'),
 							mapImageDirectory: this.option('mapImageDirectory'),
-							imageDirectory: this.option('imageDirectory')
+							imageDirectory: this.option('imageDirectory'),
+							debug: this.option('debug')
 						});
 		}, this));
 	},

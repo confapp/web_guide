@@ -8,7 +8,8 @@ $.widget("confapp.caDay", {
 		headerTag: "h3",
 		annotationImageDirectory: false,
 		mapImageDirectory: false,
-		imageDirectory: false
+		imageDirectory: false,
+		debug: false
 	},
 
 	_create: function() {
@@ -88,7 +89,8 @@ $.widget("confapp.caDay", {
 							totalSimultaneousSessions: totalSimultaneousSessions,
 							annotationImageDirectory: this.option('annotationImageDirectory'),
 							mapImageDirectory: this.option('mapImageDirectory'),
-							imageDirectory: this.option('imageDirectory')
+							imageDirectory: this.option('imageDirectory'),
+							debug: this.option('debug')
 						});
 		}, this));
 

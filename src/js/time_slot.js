@@ -14,6 +14,7 @@ $.widget("confapp.timeSlot", {
 		annotationImageDirectory: false,
 		mapImageDirectory: false,
 		imageDirectory: false,
+		debug: false,
 		getHeaderText: function(startTimestamp, endTimestamp, utc_offset, my_offset) {
 			if(startTimestamp >= 0) {
 				var startTime = new Date(startTimestamp + utc_offset + my_offset),
@@ -140,7 +141,8 @@ $.widget("confapp.timeSlot", {
 								singular: isSingular,
 								annotationImageDirectory: this.option('annotationImageDirectory'),
 								mapImageDirectory: this.option('mapImageDirectory'),
-								imageDirectory: this.option('imageDirectory')
+								imageDirectory: this.option('imageDirectory'),
+								debug: this.option('debug')
 							});
 			}, this));
 		}, this));

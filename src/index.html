@@ -20,7 +20,8 @@
 		$(function() {
 			$('#program').caWebProgram({
 				databaseURL: false,
-				conferenceID: getUrlParameter('conference') || 'default'
+				conferenceID: getUrlParameter('conference') || 'default',
+				debug: getUrlParameter('debug') || false
 			});
 		});
 	</script>
