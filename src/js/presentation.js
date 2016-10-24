@@ -325,10 +325,8 @@ $.widget("confapp.presentation", {
 			otherAttachments = [];
 
 		$.each(attachments, function(i, attachment) {
-			if(attachment.getType().toLowerCase() === "video") {
-				if(getYoutubeVideoID(attachment.getURL())) {
-					videoAttachments.push(attachment);
-				}
+			if(/*attachment.getType().toLowerCase() === "video" && */(getYoutubeVideoID(attachment.getURL()) || getVimeoVideoID(attachment.getURL())) && videoAttachments.length === 0) {
+				videoAttachments.push(attachment);
 			} else if(attachment.getURL()) { // if it has a URL
 				otherAttachments.push(attachment);
 			}
@@ -347,6 +345,8 @@ $.widget("confapp.presentation", {
 
 		if(videoAttachments.length > 0) {
 			var videoAttachment = videoAttachments[0];
+			var youtubeID = getYoutubeVideoID(videoAttachment.getURL());
+			var vimeoID = getVimeoVideoID(videoAttachment.getURL());
 
 			var videoContainer = $("<div />")	.appendTo(attachmentsCol)
 												.css({
@@ -355,19 +355,35 @@ $.widget("confapp.presentation", {
 													"padding-bottom": "60%",
 													//overflow: "hidden"
 												});
-			var youtubeElement = $("<iframe />").attr({
-													src: getYoutubeEmbedURL(getYoutubeVideoID(videoAttachment.getURL())),
-													frameborder: 0,
-													allowfullscreen: true
-												})
-												.css({
-													position: "absolute",
-													top: 0,
-													left: 0,
-													width: "100%",
-													height: "100%"
-												})
-												.appendTo(videoContainer);
+			if(youtubeID) {
+				var youtubeElement = $("<iframe />").attr({
+														src: getYoutubeEmbedURL(youtubeID),
+														frameborder: 0,
+														allowfullscreen: true
+													})
+													.css({
+														position: "absolute",
+														top: 0,
+														left: 0,
+														width: "100%",
+														height: "100%"
+													})
+													.appendTo(videoContainer);
+			} else if(vimeoID) {
+				var vimeoElement = $("<iframe />").attr({
+														src: getVimeoEmbedURL(vimeoID),
+														frameborder: 0,
+														allowfullscreen: true
+													})
+													.css({
+														position: "absolute",
+														top: 0,
+														left: 0,
+														width: "100%",
+														height: "100%"
+													})
+													.appendTo(videoContainer);
+			}
 		}
 
 		if(otherAttachments.length > 0) {
@@ -420,6 +436,19 @@ $.widget("confapp.presentation", {
 		this.descriptionElement.hide();
 	}
 });
+
+function getVimeoVideoID(url) {
+	return false;
+	//http://stackoverflow.com/questions/2916544/parsing-a-vimeo-id-using-javascript
+	var regExp = /.*:?\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
+	var match = url.match(regExp);
+
+	if(match) {
+		return match[2];
+	} else{
+		return false;
+	}
+}
 function getYoutubeVideoID(url) {
 	//http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url
     var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
@@ -433,4 +462,7 @@ function getYoutubeVideoID(url) {
 
 function getYoutubeEmbedURL(video_id) {
 	return 'https://www.youtube.com/embed/' + video_id;
+}
+function getVimeoEmbedURL(video_id) {
+	return 'https://player.vimeo.com/video/' + video_id;
 }
