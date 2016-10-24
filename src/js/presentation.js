@@ -439,6 +439,7 @@ $.widget("confapp.presentation", {
 
 function getVimeoVideoID(url) {
 	return false;
+	/*
 	//http://stackoverflow.com/questions/2916544/parsing-a-vimeo-id-using-javascript
 	var regExp = /.*:?\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
 	var match = url.match(regExp);
@@ -448,6 +449,7 @@ function getVimeoVideoID(url) {
 	} else{
 		return false;
 	}
+	*/
 }
 function getYoutubeVideoID(url) {
 	//http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url
